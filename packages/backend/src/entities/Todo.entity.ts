@@ -1,4 +1,13 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import { User } from './User';
 
 @Entity()
@@ -18,6 +27,14 @@ export class Todo extends BaseEntity {
   @Column({ default: true })
   private: boolean;
 
-  @ManyToOne(() => User, (user) => user.todos)
+  @ManyToOne(() => User, (user) => user.todos, {
+    onDelete: 'CASCADE'
+  })
   user: User;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

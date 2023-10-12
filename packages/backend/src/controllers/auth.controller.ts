@@ -7,7 +7,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   async register(req: Request, res: Response) {
-    const userExists = await this.authService.findByEmail(req.body.email);
+    const { email } = req.body;
+
+    const userExists = await this.authService.findByEmail(email);
     if (userExists) throw new HttpError(409);
 
     const user = { ...req.body };
@@ -15,7 +17,7 @@ export class AuthController {
     const newUser = await this.authService.register(user);
 
     const token = generateToken(newUser.id);
-    res.status(201).json({ token, ...newUser });
+    res.status(201).json({ token, email });
   }
 
   async login(req: Request, res: Response) {
@@ -28,7 +30,7 @@ export class AuthController {
     if (!isMatch) throw new HttpError(401, 'Email or password is wrong');
 
     const token = generateToken(user.id);
-    res.send({ token, ...user });
+    res.send({ token, email });
   }
 
   async changePassword(req: Request, res: Response) {
@@ -45,7 +47,7 @@ export class AuthController {
 
   async getCurrentUser(req: Request, res: Response) {
     const { email } = req.user as { email: string };
-    res.send({ email });
+    res.json({ email });
   }
 
   async delete(req: Request, res: Response) {

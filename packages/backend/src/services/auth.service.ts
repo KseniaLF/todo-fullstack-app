@@ -8,7 +8,9 @@ export default class AuthService {
   }
 
   async getAllUsers() {
-    const newUser = await User.find();
+    const newUser = await User.find({
+      relations: { todos: true }
+    });
     return newUser;
   }
 
