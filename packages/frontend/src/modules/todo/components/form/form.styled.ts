@@ -10,7 +10,7 @@ export const FormContainer = styled(Form)`
 
   > button {
     margin: 0 auto;
-    width: 150px;
+    max-width: 200px;
     margin-top: ${SIZES.m};
   }
 

@@ -1,6 +1,12 @@
 import React from 'react';
-import { TodoPageComponent } from '../../todo/components/todo-page/todo-page.component';
+import { TodoContainer } from '../../todo/components/todo-container';
+import { Header } from '../../common/components/header/header.component';
 
-const TodoPage = () => <TodoPageComponent />;
+const TodosPage = () => (
+  <>
+    <Header />
+    <TodoContainer />
+  </>
+);
 
-export default TodoPage;
+export default TodosPage;

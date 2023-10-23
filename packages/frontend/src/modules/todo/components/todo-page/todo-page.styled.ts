@@ -25,3 +25,9 @@ export const TodoActions = styled('div')`
   display: flex;
   gap: ${SIZES.m};
 `;
+
+export const SwitchContainer = styled('div')`
+  display: flex;
+  gap: ${SIZES.h};
+  text-align: center;
+`;

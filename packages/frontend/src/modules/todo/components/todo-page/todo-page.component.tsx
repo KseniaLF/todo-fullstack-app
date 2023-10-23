@@ -1,18 +1,13 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-
 import { useDeleteTodo, useGetTodoById, useUpdateTodo } from '../../hooks';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { FormElement } from '../form/form.component';
 import { Button } from '../../../theme/common.styled';
-import { APP_KEYS } from '../../../common/consts';
-import { Todo, TodoActions, TodoPage } from './todo-page.styled';
+import { SwitchContainer, Todo, TodoActions, TodoPage } from './todo-page.styled';
 import { CompleteSwitch } from '../switch/complete-switch.component';
 import { PrivateSwitch } from '../switch/private-switch.component';
 
-export const TodoPageComponent = () => {
-  const { id = '' } = useParams<{ id: string }>();
-
+export const TodoPageComponent = ({ id }: { id: string }) => {
   const { todo, isLoading, isError } = useGetTodoById(id);
   const deleteTodo = useDeleteTodo(id);
   const updateTodo = useUpdateTodo();
@@ -28,7 +23,7 @@ export const TodoPageComponent = () => {
           <h2>{todo.title}</h2>
           <p>Descritpion: {todo.description}</p>
 
-          <div>
+          <SwitchContainer>
             <div>
               <p>Complete:</p>
               <CompleteSwitch todo={todo} />
@@ -38,22 +33,19 @@ export const TodoPageComponent = () => {
               <p>Private:</p>
               <PrivateSwitch todo={todo} />
             </div>
-          </div>
+          </SwitchContainer>
 
           <TodoActions>
             <ModalComponent action="Edit todo">
               <FormElement todo={todo} action="Edit" callback={updateTodo} />
             </ModalComponent>
+
             <Button onClick={deleteTodo} type="button">
               Delete
             </Button>
           </TodoActions>
         </Todo>
       )}
-
-      <Link to={APP_KEYS.ROUTER_KEYS.ROOT}>
-        <Button type="button">Back</Button>
-      </Link>
     </TodoPage>
   );
 };

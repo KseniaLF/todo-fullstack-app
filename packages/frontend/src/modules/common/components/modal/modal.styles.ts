@@ -2,19 +2,19 @@ import styled from 'styled-components';
 import { Button } from '../../../theme/common.styled';
 import { SIZES } from '../../../theme/fonts.const';
 
-export const customStyles = {
+export const getCustomStyles = (large: boolean) => ({
   content: {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '500px',
+    width: large ? '1000px' : '500px',
+    height: large ? '600px' : '400px',
     maxWidth: '90%',
-    height: '400px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
   }
-};
+});
 
 export const CloseButton = styled(Button)`
   position: absolute;

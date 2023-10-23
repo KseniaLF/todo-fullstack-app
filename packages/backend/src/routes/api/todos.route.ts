@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import todoController from '../../controllers/todo.controller';
-import { isExist, tryCatch, validateBody } from '../../middlewares';
-import { todoSchema } from '../../schemas/todo.schema';
 import { todoService } from '../../services/todo.service';
 import { ITodo } from '../../types/todos.type';
-import { authenticate } from '../../middlewares/auth.middleware';
-import { isEditAccess } from '../../middlewares/is-edit-access.middleware';
+import todoController from '../../controllers/todo.controller';
+import { todoSchema } from '../../schemas/todo.schema';
+import { authenticate, isExist, tryCatch, validateBody } from '../../middlewares';
 
 const todosRouter: Router = Router();
 
@@ -28,13 +26,13 @@ todosRouter.get(
 todosRouter.patch(
   '/:id',
   validateBody(todoSchema),
-  isEditAccess<ITodo>(todoService),
+  isExist<ITodo>(todoService, true),
   tryCatch(todoController.updateTodo.bind(todoController))
 );
 
 todosRouter.delete(
   '/:id',
-  isEditAccess<ITodo>(todoService),
+  isExist<ITodo>(todoService, true),
   tryCatch(todoController.deleteTodo.bind(todoController))
 );
 

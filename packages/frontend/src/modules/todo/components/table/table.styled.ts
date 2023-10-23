@@ -26,3 +26,10 @@ export const Actions = styled('td')`
     gap: ${SIZES.m};
   }
 `;
+
+export const Pagination = styled('div')`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: ${SIZES.m};
+`;

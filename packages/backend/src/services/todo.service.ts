@@ -1,13 +1,40 @@
-import { ITodo } from '../types/todos.type';
+import { ILike } from 'typeorm';
+import { IFilter, ITodo } from '../types/todos.type';
 import { Todo } from '../entities/Todo.entity';
 
 export default class TodoService {
-  async findAllAvailable(id: string) {
+  async findAllAvailable(id: string, filters: IFilter, page?: string) {
+    const take = 5;
+    const numberPage = page ? +page : 1;
+    const skip = page ? (+page - 1) * take : 0;
+
+    const { search, status, access } = filters;
+    const whereOptions: Record<string, any> = {};
+
+    if (search) whereOptions.title = ILike(`%${search}%`);
+    if (status) whereOptions.complete = status === 'completed';
+
+    if (access === 'private') {
+      whereOptions.private = true;
+      whereOptions.user = { id };
+    }
+    if (access === 'public') whereOptions.private = false;
+
+    const where = [
+      { private: false, ...whereOptions },
+      { user: { id }, ...whereOptions }
+    ];
+
     const todos = await Todo.find({
-      where: [{ private: false }, { user: { id } }],
-      order: { createdAt: 'DESC' }
+      where,
+      order: { createdAt: 'DESC' },
+      relations: { user: true },
+      select: { user: { email: true } },
+      skip,
+      take
     });
-    return todos;
+    const totalCount = await Todo.count({ where });
+    return { todos, isMore: totalCount > take * numberPage };
   }
 
   async findAvailableById(id: string, userId: string) {

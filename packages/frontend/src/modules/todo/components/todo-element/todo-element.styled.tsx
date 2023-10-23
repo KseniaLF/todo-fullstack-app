@@ -5,10 +5,6 @@ export const TodoElementContainer = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${SIZES.m};
-
-  button {
-    margin-right: ${SIZES.m};
-  }
 `;
 
 export const Actions = styled('div')`
@@ -17,6 +13,6 @@ export const Actions = styled('div')`
   gap: ${SIZES.m};
 
   button {
-    margin-right: ${SIZES.m};
+    margin-right: ${SIZES.s};
   }
 `;

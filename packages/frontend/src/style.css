@@ -17,6 +17,10 @@ iframe {
   display: none;
 }
 
+.swiper {
+  z-index: 0;
+}
+
 .swiper-slide {
   display: flex;
   justify-content: center;

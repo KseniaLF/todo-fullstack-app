@@ -1,18 +1,17 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
+import { useMutation } from 'react-query';
 import { ITodo } from '../../common/types/todos.type';
-import { APP_KEYS } from '../../common/consts';
-import { handleAddTodo, onError } from '../utils';
+import { handleAddTodo } from '../utils';
+import { useHelper } from './helper';
 
 export const useAddTodo = () => {
-  const queryClient = useQueryClient();
-  const onSuccess = () => {
-    queryClient.invalidateQueries([APP_KEYS.QUERY_KEYS.TODOS]);
+  const { options, invalidateTodos, toast } = useHelper();
 
+  const onSuccess = () => {
+    invalidateTodos();
     toast('Todo successfully added!');
   };
 
-  const { mutate } = useMutation((todo: ITodo) => handleAddTodo(todo), { onSuccess, onError });
+  const { mutate } = useMutation((todo: ITodo) => handleAddTodo(todo), options(onSuccess));
   const addTodo = (todo: ITodo) => mutate(todo);
   return addTodo;
 };

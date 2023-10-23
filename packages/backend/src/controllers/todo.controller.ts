@@ -7,7 +7,8 @@ export class TodoController {
 
   async getAllAvailableTodo(req: Request, res: Response) {
     const { id: userId } = req.user as { id: string };
-    const todos = await this.todoService.findAllAvailable(userId);
+    const { page, ...filters } = req.query;
+    const todos = await this.todoService.findAllAvailable(userId, filters, page as string);
     res.json(todos);
   }
 

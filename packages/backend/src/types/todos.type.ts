@@ -4,3 +4,9 @@ export interface ITodo {
   complete: boolean;
   private: boolean;
 }
+
+export interface IFilter {
+  search?: string;
+  status?: string;
+  access?: string;
+}

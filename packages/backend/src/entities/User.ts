@@ -12,7 +12,7 @@ import { Todo } from './Todo.entity';
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ unique: true })
@@ -20,6 +20,12 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  @Column({ default: false })
+  verified: boolean;
+
+  @Column({ default: '' })
+  verificationToken: string;
 
   @OneToMany(() => Todo, (todo) => todo.user)
   todos: Todo[];

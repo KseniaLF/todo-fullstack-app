@@ -10,6 +10,8 @@ export const InputElement = ({
   error: string | undefined;
   touched: boolean | undefined;
   name: string;
+  type?: string;
+  validate?: (value: string) => string;
 }) => (
   <>
     <label htmlFor={name}>{name}</label>

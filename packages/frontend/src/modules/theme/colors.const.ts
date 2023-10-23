@@ -6,5 +6,6 @@ export const COLORS = {
   secondary: '#808080',
   main: '#1a3eab',
   mainHover: '#2352dd',
-  error: 'red'
+  error: 'red',
+  disabled: 'gray'
 };

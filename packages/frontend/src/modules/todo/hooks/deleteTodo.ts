@@ -1,23 +1,17 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { APP_KEYS } from '../../common/consts';
-import { handleDeleteTodo, onError } from '../utils';
+import { useMutation } from 'react-query';
+import { handleDeleteTodo } from '../utils';
+import { useHelper } from './helper';
 
 export const useDeleteTodo = (id: string) => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const { options, invalidateTodos, toast, resetPage } = useHelper();
 
   const onSuccess = () => {
-    queryClient.invalidateQueries([APP_KEYS.QUERY_KEYS.TODOS], {
-      refetchInactive: true
-    });
-
+    invalidateTodos();
+    // resetPage();
     toast('Todo successfully deleted!');
-    navigate(APP_KEYS.ROUTER_KEYS.ROOT);
   };
 
-  const { mutate } = useMutation(() => handleDeleteTodo(id), { onSuccess, onError });
+  const { mutate } = useMutation(() => handleDeleteTodo(id), options(onSuccess));
   const deleteTodo = () => mutate();
   return deleteTodo;
 };

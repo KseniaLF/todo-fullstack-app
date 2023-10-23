@@ -1,6 +1,13 @@
 import React from 'react';
-import { TodoContainer } from '../../todo/components/todo-container';
+import { LoginButton, RegistrationButton } from '../../auth/components';
 
-const HomePage = () => <TodoContainer />;
+const HomePage = () => (
+  <div>
+    <h1>Todo list</h1>
+
+    <LoginButton />
+    <RegistrationButton />
+  </div>
+);
 
 export default HomePage;

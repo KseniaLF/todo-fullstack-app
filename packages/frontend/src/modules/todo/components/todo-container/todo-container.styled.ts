@@ -7,12 +7,3 @@ export const Todo = styled('div')`
   flex-direction: column;
   gap: ${SIZES.l};
 `;
-
-export const TodoList = styled('ul')`
-  padding: 0;
-  margin: 0;
-  margin-top: ${SIZES.m};
-  display: flex;
-  flex-direction: column;
-  gap: ${SIZES.l};
-`;

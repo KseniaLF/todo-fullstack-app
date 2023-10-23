@@ -1,25 +1,27 @@
-import { ITodo } from '../types/todos.type';
+import { ISearchParams, ITodo } from '../types/todos.type';
 import { HttpService } from './http.service';
 
 class TodoService extends HttpService {
-  getTodos() {
-    return this.get({ url: 'todos' }, false);
+  getFilteredTodos(filterData: ISearchParams) {
+    const queryParams = new URLSearchParams({ ...filterData });
+    const url = `todos?${queryParams.toString()}`;
+    return this.get({ url });
   }
 
   getTodoById(id: string) {
-    return this.get({ url: `todos/${id}` }, false);
+    return this.get({ url: `todos/${id}` });
   }
 
   deleteTodo(id: string) {
-    return this.delete({ url: `todos/${id}` }, false);
+    return this.delete({ url: `todos/${id}` });
   }
 
   updateTodo({ id, ...data }: ITodo) {
-    return this.put({ url: `todos/${id}`, data }, false);
+    return this.patch({ url: `todos/${id}`, data });
   }
 
   addTodo({ id, ...data }: ITodo) {
-    return this.post({ url: 'todos', data }, false);
+    return this.post({ url: 'todos', data });
   }
 }
 

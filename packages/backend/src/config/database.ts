@@ -34,8 +34,12 @@ const connectDB = async () => {
     };
     await createConnection(options);
     console.log('MongoDB Connected...');
-  } catch (err: any) {
-    console.error(err.message);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    } else {
+      console.error('An unknown error occurred');
+    }
     // Exit process with failure
     process.exit(1);
   }
